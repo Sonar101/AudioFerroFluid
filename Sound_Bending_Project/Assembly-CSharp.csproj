@@ -64,9 +64,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AudioMove.cs" />
     <Compile Include="Assets\Scripts\Planet.cs" />
+    <Compile Include="Assets\Scripts\ScrollTex.cs" />
     <Compile Include="Assets\Scripts\TerrainFace.cs" />
     <None Include="Assets\Shaders\FerroFluid.shader" />
+    <None Include="Assets\Scripts\FerroFluid.shader" />
     <None Include="Assets\Shaders\Polkadots.shader" />
     <None Include="Assets\Shaders\Outline.shader" />
     <Reference Include="UnityEngine">
