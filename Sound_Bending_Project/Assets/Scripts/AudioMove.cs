@@ -53,9 +53,9 @@ public class AudioMove : MonoBehaviour
 
         Shader.SetGlobalFloat("_Spikyness", spikyness);
         //assign slider value to sphere
-        aggressiveness = 0.1f;//aggressive.value;
+        aggressiveness = 0.006f;//aggressive.value;
         //reset to original position
-        for (var i = 0; i < vertices.Length; i++)
+        /*for (var i = 0; i < vertices.Length; i++)
         {
             vertices[i][0] = defaultVertices[i][0];
             vertices[i][1] = defaultVertices[i][1];
@@ -64,7 +64,7 @@ public class AudioMove : MonoBehaviour
         mesh.vertices = vertices;
         mesh.RecalculateBounds();
 
-        Vector3[] normals = mesh.normals;
+        Vector3[] normals = mesh.normals;*/
         //this.transform.Rotate(10.0f, 0.0f, 0.0f, Space.Self);
         //resets to default scale
         this.transform.localScale = new Vector3(this.transform.localScale.x, yDefault, this.transform.localScale.z);
@@ -88,7 +88,7 @@ public class AudioMove : MonoBehaviour
             //set cap at 2
             } else if(loudness >= 2.0)
             {
-                if (spikyness < loudness && spikyness < 2.0)
+                if (spikyness < loudness && spikyness < 0.05)
                 {
                     spikyness += aggressiveness;
                 }
@@ -102,12 +102,12 @@ public class AudioMove : MonoBehaviour
         {
             if(spikyness > 0.0)
             {
-                spikyness -= 0.1f;
+                spikyness -= aggressiveness;
             }
         }
         // assign the local vertices array into the vertices array of the Mesh.
-        mesh.vertices = vertices;
-        mesh.RecalculateBounds();
+        //mesh.vertices = vertices;
+        //mesh.RecalculateBounds();
     }
 
     private void RandomSpin()
