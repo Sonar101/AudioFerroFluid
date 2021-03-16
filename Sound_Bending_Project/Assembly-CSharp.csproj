@@ -79,7 +79,9 @@
     <None Include="Assets\Shaders\FerroFluid.shader" />
     <None Include="Assets\Scripts\FerroFluid2.shader" />
     <None Include="Assets\Scripts\FerroFluid.shader" />
+    <None Include="Assets\Shaders\FeatherShader.shader" />
     <None Include="Assets\Shaders\Polkadots.shader" />
+    <None Include="Assets\Shaders\ColorShader.shader" />
     <None Include="Assets\Shaders\Outline.shader" />
     <None Include="Assets\Noah File\SkySerie Freebie\Hdri setup.txt" />
     <Reference Include="UnityEngine">
