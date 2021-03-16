@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 2800000, guid: 279e64580c85601458cf4a5a5ff0188f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -47,12 +51,20 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Metalness:
+        m_Texture: {fileID: 2800000, guid: e583724951f8b014dbe692e6b9ec2418, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Roughness:
+        m_Texture: {fileID: 2800000, guid: 706b91521dcddf2428dfdcdcc47849a7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -65,6 +77,7 @@ Material:
     - _GlossyReflections: 1
     - _MaxSpike: 0.1
     - _Metallic: 0
+    - _MetalnessVal: 0.5
     - _ModComp: 7
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -78,14 +91,15 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _freq0: 0.0009710684
-    - _freq1: 0.024946736
-    - _freq2: 0.010767481
-    - _freq3: 0.0056920624
-    - _freq4: 0.0011845737
-    - _freq5: 0.00052659115
-    - _freq6: 0.0000995199
-    - _freq7: 0.0000076033607
+    - _freq0: 0.0030019768
+    - _freq1: 0.0406335
+    - _freq2: 0.015971798
+    - _freq3: 0.004833969
+    - _freq4: 0.0014983126
+    - _freq5: 0.0005242583
+    - _freq6: 0.00007015546
+    - _freq7: 0.000005108886
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
