@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class AudioMove : MonoBehaviour
 {
+    AudioSource _audio;
+    public static float[] _samples = new float[512];
+    public static float[] _freqBand = new float[8];
+
     public float sensitivity = 100;
     public float loudness;
-    AudioSource _audio;
     float yDefault;
     float xDefault;
     public float rotationVal = 0.0f;
@@ -16,6 +19,18 @@ public class AudioMove : MonoBehaviour
     float xspin;
     float yspin;
     float zspin;
+    static readonly string[] bandNames = {
+        "_Spikyness0",
+        "_Spikyness1",
+        "_Spikyness2",
+        "_Spikyness3",
+        "_pikyness4",
+        "_Spikyness5",
+        "_Spikyness6",
+        "_Spikyness7"
+    };
+    float[] spikyVals = new float[8];
+
     //private Slider aggressive;
 
     Mesh mesh;
@@ -44,7 +59,14 @@ public class AudioMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(Time.time);
+        loudness = GetAverageVolume() * sensitivity;
+        GetSpectrumAudioSource();
+        MakeFrequencyBands();
+
+        AssignBandValues();
+        AssignFrequencyBands();
+
+        print(_freqBand[4]);
         if(Time.time % 3.0f < 0.5f)
         {
             RandomSpin();
@@ -67,44 +89,50 @@ public class AudioMove : MonoBehaviour
         Vector3[] normals = mesh.normals;*/
         //this.transform.Rotate(10.0f, 0.0f, 0.0f, Space.Self);
         //resets to default scale
-        this.transform.localScale = new Vector3(this.transform.localScale.x, yDefault, this.transform.localScale.z);
+        /*this.transform.localScale = new Vector3(this.transform.localScale.x, yDefault, this.transform.localScale.z);
         //this.transform.localScale = new Vector3(xDefault, this.transform.localScale.y, this.transform.localScale.z);
-        loudness = GetAverageVolume() * sensitivity;
-        if(loudness > 0.4)
+        for(int i = 0; i < spikyVals.Length; i++)
         {
-            //this.GetComponent<Rigidbody>().velocity = new Vector3(this.GetComponent<Rigidbody>().∂velocity.x, 4, this.GetComponent<Rigidbody>().velocity.z);
-            //this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y + (loudness), this.transform.localScale.z);
-            //move vertice out along the normal vector
+            if (loudness > 0.4)
+            {
+                //this.GetComponent<Rigidbody>().velocity = new Vector3(this.GetComponent<Rigidbody>().∂velocity.x, 4, this.GetComponent<Rigidbody>().velocity.z);
+                //this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y + (loudness), this.transform.localScale.z);
+                //move vertice out along the normal vector
 
-            if(loudness < 2.0)
-            {
-                if(spikyness < loudness)
+                if (loudness < 2.0)
                 {
-                    spikyness += aggressiveness;
-                } else if(spikyness > loudness)
-                {
-                    spikyness -= aggressiveness;
+                    if (spikyVals[i] < loudness)
+                    {
+                        spikyVals[i] += aggressiveness;
+                    }
+                    else if (spikyVals[i] > loudness)
+                    {
+                        spikyVals[i] -= aggressiveness;
+                    }
+                    //set cap at 2
                 }
-            //set cap at 2
-            } else if(loudness >= 2.0)
-            {
-                if (spikyness < loudness && spikyness < 0.05)
+                else if (loudness >= 2.0)
                 {
-                    spikyness += aggressiveness;
+                    if (spikyVals[i] < loudness && spikyVals[i] < 0.05)
+                    {
+                        spikyVals[i] += aggressiveness;
+                    }
+                    else if (spikyVals[i] > loudness && spikyVals[i] > 0.0)
+                    {
+                        spikyVals[i] -= aggressiveness;
+                    }
                 }
-                else if (spikyness > loudness && spikyness > 0.0)
+
+            }
+            else
+            {
+                if (spikyVals[i] > 0.0)
                 {
-                    spikyness -= aggressiveness;
+                    spikyVals[i] -= aggressiveness;
                 }
             }
-            
-        } else
-        {
-            if(spikyness > 0.0)
-            {
-                spikyness -= aggressiveness;
-            }
-        }
+
+        }*/
         // assign the local vertices array into the vertices array of the Mesh.
         //mesh.vertices = vertices;
         //mesh.RecalculateBounds();
@@ -127,5 +155,75 @@ public class AudioMove : MonoBehaviour
         }
 
         return a / 256;
+    }
+
+    void MakeFrequencyBands()
+    {
+        if(loudness > 0.4)
+        {
+            int count = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                float average = 0;
+                int sampleCount = (int)Mathf.Pow(2, i) * 2;
+
+                if (i == 7)
+                {
+                    sampleCount += 2;
+                }
+
+                for (int j = 0; j < sampleCount; j++)
+                {
+                    average += _samples[count] * (count + 1);
+                    _freqBand[i] = average * 10;
+                }
+            }
+
+        } else
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                int sampleCount = (int)Mathf.Pow(2, i) * 2;
+
+                if (i == 7)
+                {
+                    sampleCount += 2;
+                }
+
+                for (int j = 0; j < sampleCount; j++)
+                {
+                    if(_freqBand[i] > 0.09f)
+                    {
+                        _freqBand[i] = _freqBand[i] - 0.1f;
+                    }
+                }
+            }
+
+        }
+    }
+
+    void AssignBandValues()
+    {
+        int i = 0;
+        while(i < spikyVals.Length){
+            spikyVals[i] = _freqBand[i];
+            i++;
+        }
+    }
+
+    void AssignFrequencyBands()
+    {
+        foreach (string name in bandNames)
+        {
+            foreach (float val in spikyVals)
+            {
+                Shader.SetGlobalFloat(name, val);
+            }
+        }
+    }
+
+    void GetSpectrumAudioSource()
+    {
+        _audio.GetSpectrumData(_samples, 0, FFTWindow.Blackman);
     }
 }

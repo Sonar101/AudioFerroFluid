@@ -10,9 +10,10 @@
 		_ModComp("Modulus Comparison Value", float) = 7.0	//		Using 7 means the spike modulus key values 
 															// repeat every 7 circles, which is good for
 															// 7 frequency bands.
+		_Sensitivity("Sensitivity", Range(0.1, 1.0)) = 0.5
 	}
-	
-	SubShader
+
+		SubShader
 	{
 		Pass
 		{
@@ -25,8 +26,18 @@
 
 			#include "UnityCG.cginc"
 
-			// --- linked variables
+		// --- linked variables
 			float _Spikyness;
+			float _Spikyness0;
+			float _Spikyness1;
+			float _Spikyness2;
+			float _Spikyness3;
+			float _Spikyness4;
+			float _Spikyness5;
+			float _Spikyness6;
+			float _Spikyness7;
+			float _Sensitivity;
+
 			float _RoundPlace;
 			float _SpikeSpread;
 			float _ModComp;
@@ -65,6 +76,39 @@
 				return float3(closeness2Center, 0, 0);
 			}
 
+			float SpikyVal(float2 uv) {
+				float2 circleCenter;
+				circleCenter.x = round(uv.x * _RoundPlace) / _RoundPlace;
+				circleCenter.y = round(uv.y * _RoundPlace) / _RoundPlace;
+				float closeness2Center = (1 - InverseLerp(distance(circleCenter, uv), 0.0, 1 / (_RoundPlace * _SpikeSpread)));
+
+
+				if (ModulusKeyValue(circleCenter.x) == 0) {
+					return _Spikyness0;
+				}
+				else if (ModulusKeyValue(circleCenter.x) == 1) {
+					return _Spikyness1;
+				}
+				else if (ModulusKeyValue(circleCenter.x) == 2) {
+					return _Spikyness2;
+				}
+				else if (ModulusKeyValue(circleCenter.x) == 3) {
+					return _Spikyness3;
+				}
+				else if (ModulusKeyValue(circleCenter.x) == 4) {
+					return _Spikyness4;
+				}
+				else if (ModulusKeyValue(circleCenter.x) == 5) {
+					return _Spikyness5;
+				}
+				else if (ModulusKeyValue(circleCenter.x) == 6) {
+					return _Spikyness6;
+				}
+				else {
+					return _Spikyness7;
+				}
+			}
+
 			float3 ModDots(float2 uv)
 			{
 				float2 circleCenter;
@@ -74,22 +118,30 @@
 				float closeness2Center = (1 - InverseLerp(distance(circleCenter, uv), 0.0, 1 / (_RoundPlace * _SpikeSpread)));
 
 				// Look at this for an example of using modulus to choose specific spikes
-				if (ModulusKeyValue(circleCenter.x) == 0)
+				if (ModulusKeyValue(circleCenter.x) == 0) {
 					return float3(closeness2Center, 0, 0);					// red
-				else if (ModulusKeyValue(circleCenter.x) == 1)
+				}
+				else if (ModulusKeyValue(circleCenter.x) == 1) {
 					return float3(0, closeness2Center, 0);					// green
-				else if (ModulusKeyValue(circleCenter.x) == 2)
+				}
+				else if (ModulusKeyValue(circleCenter.x) == 2) {
 					return float3(0, 0, closeness2Center);					// blue
-				else if (ModulusKeyValue(circleCenter.x) == 3)
+				}
+				else if (ModulusKeyValue(circleCenter.x) == 3) {
 					return float3(closeness2Center, 0, closeness2Center);	// magenta
-				else if (ModulusKeyValue(circleCenter.x) == 4)
+				}
+				else if (ModulusKeyValue(circleCenter.x) == 4) {
 					return float3(closeness2Center, closeness2Center, 0);	// yellow
-				else if (ModulusKeyValue(circleCenter.x) == 5)
+				}
+				else if (ModulusKeyValue(circleCenter.x) == 5) {
 					return float3(0, closeness2Center, closeness2Center);	// cyan
-				else if (ModulusKeyValue(circleCenter.x) == 6)
+				}
+				else if (ModulusKeyValue(circleCenter.x) == 6) {
 					return float3(closeness2Center.xxx);					// white
-				else // ERROR
-					return float3(0, 0, 0);									// black
+				}
+				else {// ERROR
+					return float3(0, 0, 0);
+				}// black
 			}
 			
 			// --- main functions
@@ -114,7 +166,7 @@
 				o.uv0 = v.uv0;
 				o.normal = UnityObjectToWorldNormal(v.normal);
 				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
-				o.clipPos = UnityObjectToClipPos(v.vertex + o.normal * _Spikyness * Dots(o.uv0).x); // CURRENTLY USES DOTS()
+				o.clipPos = UnityObjectToClipPos(v.vertex + o.normal * SpikyVal(o.uv0) * Dots(o.uv0).x * _Sensitivity); // CURRENTLY USES DOTS()
 
 				return o;
 			}
@@ -122,6 +174,7 @@
 			fixed4 frag(VertexShaderOutput i) : SV_Target
 			{
 				return float4(ModDots(i.uv0),1);
+				//return float4 (_Spikyness4.xxxx);
 			}
 			ENDCG
 		}
