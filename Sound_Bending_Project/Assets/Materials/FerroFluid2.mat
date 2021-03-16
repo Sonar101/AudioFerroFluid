@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: FerroFluid2
-  m_Shader: {fileID: 4800000, guid: 33461ba05bdb5f146af12c03d74d0ec9, type: 3}
+  m_Shader: {fileID: 4800000, guid: 72f915ad716ef5947b6a033ed0862d40, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -63,20 +63,29 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _MaxSpike: 0.1
     - _Metallic: 0
     - _ModComp: 7
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RoundPlace: 16.96
+    - _RoundPlace: 16.9
     - _Sensitivity: 0.119
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SpikeSpread: 2.6
-    - _Spikyness: 1
+    - _SpikeSpread: 2.13
+    - _Spikyness: 0.80913496
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - _freq0: 0.0009710684
+    - _freq1: 0.024946736
+    - _freq2: 0.010767481
+    - _freq3: 0.0056920624
+    - _freq4: 0.0011845737
+    - _freq5: 0.00052659115
+    - _freq6: 0.0000995199
+    - _freq7: 0.0000076033607
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class AudioMove : MonoBehaviour
 {
     AudioSource _audio;
+    public bool useMicAsAudioClip = true;
     public static float[] _samples = new float[512];
     public static float[] _freqBand = new float[8];
 
@@ -40,10 +41,12 @@ public class AudioMove : MonoBehaviour
     void Start()
     {
         _audio = GetComponent<AudioSource>();
-        _audio.clip = Microphone.Start(null, true, 10, 44100);
+        if (useMicAsAudioClip) 
+            _audio.clip = Microphone.Start(null, true, 10, 44100);
         _audio.loop = true;
         //_audio.mute = true;
-        while(!(Microphone.GetPosition(null) > 0)){}
+        if (useMicAsAudioClip)
+            while (!(Microphone.GetPosition(null) > 0)){}
         _audio.Play();
         yDefault = this.transform.localScale.y;
         xDefault = this.transform.localScale.x;
@@ -66,7 +69,7 @@ public class AudioMove : MonoBehaviour
         AssignBandValues();
         AssignFrequencyBands();
 
-        print(_freqBand[4]);
+        //print(_freqBand[4]);
         if(Time.time % 3.0f < 0.5f)
         {
             RandomSpin();
@@ -200,6 +203,9 @@ public class AudioMove : MonoBehaviour
             }
 
         }
+
+        float val = (1 / (_freqBand[0] + 1)) * _freqBand[0];
+        print(_freqBand[0] + ":     " + val);
     }
 
     void AssignBandValues()
@@ -225,5 +231,10 @@ public class AudioMove : MonoBehaviour
     void GetSpectrumAudioSource()
     {
         _audio.GetSpectrumData(_samples, 0, FFTWindow.Blackman);
+    }
+
+    public float[] GetFreqBands()
+    {
+        return _freqBand;
     }
 }

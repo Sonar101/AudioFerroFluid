@@ -10,7 +10,7 @@
 		_ModComp("Modulus Comparison Value", float) = 7.0	//		Using 7 means the spike modulus key values 
 															// repeat every 7 circles, which is good for
 															// 7 frequency bands.
-		_Sensitivity("Sensitivity", Range(0.1, 1.0)) = 0.5
+		_MaxSpike("Max Spike Scale", float) = 0.006
 	}
 
 		SubShader
@@ -36,7 +36,7 @@
 			float _Spikyness5;
 			float _Spikyness6;
 			float _Spikyness7;
-			float _Sensitivity;
+			float _MaxSpike;
 
 			float _RoundPlace;
 			float _SpikeSpread;
@@ -166,7 +166,9 @@
 				o.uv0 = v.uv0;
 				o.normal = UnityObjectToWorldNormal(v.normal);
 				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
-				o.clipPos = UnityObjectToClipPos(v.vertex + o.normal * SpikyVal(o.uv0) * Dots(o.uv0).x * _Sensitivity); // CURRENTLY USES DOTS()
+
+				// Makes Spike
+				o.clipPos = UnityObjectToClipPos(v.vertex + v.normal * ( (1 / (SpikyVal(o.uv0) + 1)) * SpikyVal(o.uv0) ) * _MaxSpike * Dots(o.uv0).x);
 
 				return o;
 			}
