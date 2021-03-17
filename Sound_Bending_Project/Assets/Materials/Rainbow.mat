@@ -84,7 +84,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _RoughnessVal: 0.5
-    - _RoundPlace: 10
+    - _RoundPlace: 38
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpikeSpread: 2

@@ -84,7 +84,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _RoughnessVal: 0.315
-    - _RoundPlace: 16.9
+    - _RoundPlace: 14
     - _Sensitivity: 0.119
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -93,14 +93,14 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _freq0: 0.0031211292
-    - _freq1: 0.0054570264
-    - _freq2: 0.014390479
-    - _freq3: 0.0054839663
-    - _freq4: 0.0012679392
-    - _freq5: 0.00041755484
-    - _freq6: 0.00016607357
-    - _freq7: 0.000011970482
+    - _freq0: 0.046807498
+    - _freq1: 0.026628334
+    - _freq2: 0.015823156
+    - _freq3: 0.008497435
+    - _freq4: 0.003023179
+    - _freq5: 0.00082185207
+    - _freq6: 0.00013282783
+    - _freq7: 0.000007802192
     m_Colors:
     - _Color: {r: 0.23584908, g: 0.22583662, b: 0.22583662, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
